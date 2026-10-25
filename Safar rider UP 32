@@ -1,0 +1,124 @@
+// App.jsx (SafarRider Lucknow - React Code)
+import React, { useState, useEffect } from 'react';
+import { 
+  Navigation, Car, Bike, Shield, MapPin, Phone, 
+  CreditCard, User, CircleDot, Award, CheckCircle2, Zap
+} from 'lucide-react';
+
+export default function SafarRiderLucknow() {
+  const [activeTab, setActiveTab] = useState('rider'); // rider | driver
+  const [pickup, setPickup] = useState('हज़रतगंज (Hazratganj)');
+  const [dropoff, setDropoff] = useState('गोमती नगर (Gomti Nagar)');
+  const [otp, setOtp] = useState('');
+  const [isDriverOnline, setIsDriverOnline] = useState(false);
+  const [driverEarnings, setDriverEarnings] = useState(1450);
+
+  // Lucknow Famous Spots
+  const lucknowLocations = [
+    'हज़रतगंज (Hazratganj)',
+    'गोमती नगर (Gomti Nagar Palassio)',
+    'चारबाग रेलवे स्टेशन (Charbagh Railway Station)',
+    'चौक (Chowk Famous Market)',
+    'अमौसी एयरपोर्ट (Lucknow Airport - CCSI)',
+    'इंदिरा नगर (Indira Nagar)',
+    'आलमबाग बस टर्मिनल (Alambagh Bus Stand)'
+  ];
+
+  return (
+    <div className="min-h-screen bg-slate-900 text-white font-sans">
+      {/* Header / Brand */}
+      <header className="bg-slate-800 p-4 border-b border-slate-700 flex justify-between items-center">
+        <h1 className="text-xl font-bold text-amber-400 flex items-center gap-2">
+          <Car className="text-amber-400" /> सफ़र राइडर - लखनऊ
+        </h1>
+        <div className="flex bg-slate-700 rounded-lg p-1">
+          <button 
+            onClick={() => setActiveTab('rider')}
+            className={`px-3 py-1 text-sm rounded-md transition ${activeTab === 'rider' ? 'bg-amber-500 text-black font-semibold' : 'text-slate-300'}`}>
+            राइडर (Rider)
+          </button>
+          <button 
+            onClick={() => setActiveTab('driver')}
+            className={`px-3 py-1 text-sm rounded-md transition ${activeTab === 'driver' ? 'bg-amber-500 text-black font-semibold' : 'text-slate-300'}`}>
+            चालक (Driver)
+          </button>
+        </div>
+      </header>
+
+      {/* Main Body */}
+      <main className="p-4 max-w-md mx-auto">
+        {activeTab === 'rider' ? (
+          <div className="space-y-4">
+            <div className="bg-slate-800 p-4 rounded-xl border border-slate-700">
+              <h2 className="text-md font-semibold text-slate-200 mb-3">अपनी राइड बुक करें</h2>
+              <div className="space-y-3">
+                <div>
+                  <label className="text-xs text-slate-400">पिकअप लोकेशन (Pickup)</label>
+                  <select 
+                    value={pickup} 
+                    onChange={(e) => setPickup(e.target.value)}
+                    className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm text-amber-300 focus:outline-none">
+                    {lucknowLocations.map(loc => <option key={loc} value={loc}>{loc}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="text-xs text-slate-400">ड्रॉप लोकेशन (Drop-off)</label>
+                  <select 
+                    value={dropoff} 
+                    onChange={(e) => setDropoff(e.target.value)}
+                    className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm text-amber-300 focus:outline-none">
+                    {lucknowLocations.map(loc => <option key={loc} value={loc}>{loc}</option>)}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {/* Rates in INR */}
+            <div className="bg-slate-800 p-4 rounded-xl border border-slate-700 space-y-2">
+              <h3 className="text-sm font-semibold text-slate-300">उपलब्ध सवारी (Rates in ₹)</h3>
+              <div className="flex justify-between items-center bg-slate-900 p-3 rounded-lg border border-slate-700">
+                <div className="flex items-center gap-3">
+                  <Zap className="text-yellow-400" />
+                  <div>
+                    <p className="font-semibold text-sm">ई-रिक्शा / बाईक</p>
+                    <p className="text-xs text-slate-400">सस्ती व तेज़ सवारी</p>
+                  </div>
+                </div>
+                <p className="text-amber-400 font-bold">₹40 - ₹60</p>
+              </div>
+              <div className="flex justify-between items-center bg-slate-900 p-3 rounded-lg border border-slate-700">
+                <div className="flex items-center gap-3">
+                  <Car className="text-blue-400" />
+                  <div>
+                    <p className="font-semibold text-sm">ऑटो / मिनी कैब</p>
+                    <p className="text-xs text-slate-400">आरामदायक सफर</p>
+                  </div>
+                </div>
+                <p className="text-amber-400 font-bold">₹120 - ₹180</p>
+              </div>
+            </div>
+
+            <button className="w-full bg-amber-500 hover:bg-amber-600 text-black font-bold py-3 rounded-xl shadow-lg transition">
+              राइड बुक करें (Book Now)
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {/* Driver Dashboard */}
+            <div className="bg-slate-800 p-4 rounded-xl border border-slate-700 flex justify-between items-center">
+              <div>
+                <p className="text-xs text-slate-400">आज की कमाई (Earnings)</p>
+                <p className="text-2xl font-bold text-green-400">₹{driverEarnings}</p>
+              </div>
+              <button 
+                onClick={() => setIsDriverOnline(!isDriverOnline)}
+                className={`px-4 py-2 rounded-lg font-bold text-sm ${isDriverOnline ? 'bg-green-500 text-black' : 'bg-red-500 text-white'}`}>
+                {isDriverOnline ? 'ऑनलाइन (Online)' : 'ऑफलाइन (Offline)'}
+              </button>
+            </div>
+          </div>
+        )}
+      </main>
+    </div>
+  );
+}
